@@ -1,10 +1,14 @@
-FROM ruby:2.5.1-alpine
+# docker build -t opencook/sidekiq-web -f Dockerfile .
+# docker run -ti opencook/sidekiq-web ash
+FROM ruby:3.1-alpine
 
 WORKDIR /sidekiq
 
-COPY Gemfile* ./
-COPY config.ru .
+RUN gem install rack-session -v 0.3.0
+RUN gem install rackup -v 0.2.3
+RUN gem install webrick -v 1.7.0
+RUN gem install sidekiq -v 7.0.2
 
-RUN bundle install
+COPY config.ru .
 
 CMD rackup config.ru -o 0.0.0.0 -p 3030 -q
