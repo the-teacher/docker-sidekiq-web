@@ -13,6 +13,10 @@ If you have an old Sidekiq, but want to use most recent version of Sidekiq Web U
 
 - https://github.com/the-teacher/docker-sidekiq-web
 
+### Docker Hub page
+
+- https://hub.docker.com/r/iamteacher/sidekiq
+
 ### Image contains
 
 * Alpine
