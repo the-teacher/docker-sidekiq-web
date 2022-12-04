@@ -76,7 +76,7 @@ docker run \
 Sidekiq.configure_client do |config|
   config.redis = {
     url: redis_url,
-    namespace: 'my-app-nmespace' # <<< must be removed
+    namespace: 'my-app-namespace' # <<< must be removed
   }
 end
 ```
