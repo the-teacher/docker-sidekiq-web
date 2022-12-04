@@ -13,14 +13,14 @@ If you have an old Sidekiq, but want to use most recent version of Sidekiq Web U
 
 - https://github.com/the-teacher/docker-sidekiq-web
 
-# Image contains
+### Image contains
 
 * Alpine
 * Ruby 3
 * Sidekiq 7.0.2
 * HTTP Basic Auth support
 
-## Usage
+# Usage
 
 ## Docker Compose
 
@@ -47,6 +47,8 @@ services:
       - 3030:3030
 ```
 
+Now Web UI is available on `http://localhost:3030`
+
 ### Simple Example
 
 - Defailt value of `SIDEKIQ_USER` is `admin`
@@ -59,6 +61,20 @@ docker run \
   -e SIDEKIQ_USER=admin \
   -e SIDEKIQ_PASSWORD=admin \
   iamteacher/sidekiq:web.arm64
+```
+
+### Important notes
+
+- Sidekiq iteself must be run in a container with your application. This container provides only Web UI which can be started separately only by having an access to Redis.
+- Sidekiq [does not support Redis Client Namespaces](https://github.com/mperham/sidekiq/blob/main/lib/sidekiq/redis_client_adapter.rb#L85) anymore. You should not use `namespace` option in your application.
+
+```ruby
+Sidekiq.configure_client do |config|
+  config.redis = {
+    url: redis_url,
+    namespace: 'my-app-nmespace' # <<< must be removed
+  }
+end
 ```
 
 ### Original Solution
