@@ -1,54 +1,70 @@
-# docker-sidekiq-web
+# Dockerized Sidekiq Web UI
 
-A Docker image to run a stand-alone instance of the Sidekiq UI.
+### Why?
 
-Docker Hub Repo: https://hub.docker.com/r/aschzero/sidekiq-web/
+If you have an old Sidekiq, but want to use most recent version of Sidekiq Web UI.
 
-# Functionality
+### What Images?
 
-* Uses alpine ruby for the base image
-* Uses most recent versions of required gems
+- [ARM64](https://hub.docker.com/r/iamteacher/sidekiq/tags)
+- [AMD64](https://hub.docker.com/r/iamteacher/sidekiq/tags)
+
+### Dockerfile Repo
+
+- https://github.com/the-teacher/docker-sidekiq-web
+
+# Image contains
+
+* Alpine
+* Ruby 3
+* Sidekiq 7.0.2
 * HTTP Basic Auth support
 
-# Usage
-
-## Simple Example
-
-```
-docker run \
-  -p 3030:3030 \
-  -e REDIS_URL=redis://host:6379 \
-  aschzero/sidekiq-web
-```
-
-The username and password are `admin`/`admin` by default.
-
-## Custom Credentials
-
-To run the container with a custom username and password:
-
-```
-docker run \
-  -p 3030:3030 \
-  -e REDIS_URL=redis://host:6379 \
-  -e SIDEKIQ_USER=myusername \
-  -e SIDEKIQ_PASSWORD=password123 \
-  aschzero/sidekiq-web
-```
+## Usage
 
 ## Docker Compose
 
-Example compose file:
+Run with `docker-compose -f docker-compose.yml up`
 
-```
-version: '3'
+```yaml
+version: '3.8'
+
 services:
+  redis:
+    image: redis:7.0.5-alpine
+    ports:
+      - 6379:6379
+    volumes:
+      - db/REDIS:/data
+
   sidekiq_web:
-    image: aschzero/sidekiq-web
+    image: iamteacher/sidekiq:web.arm64
     environment:
-      REDIS_URL: redis://host:6379
-      SIDEKIQ_USER: myusername
+      REDIS_URL: redis://redis:6379
+      SIDEKIQ_USER: admin
       SIDEKIQ_PASSWORD: password123
     ports:
       - 3030:3030
 ```
+
+### Simple Example
+
+- Defailt value of `SIDEKIQ_USER` is `admin`
+- Defailt value of `SIDEKIQ_PASSWORD` is `admin`
+
+```javascript
+docker run \
+  -p 3030:3030 \
+  -e REDIS_URL=redis://redis:6379 \
+  -e SIDEKIQ_USER=admin \
+  -e SIDEKIQ_PASSWORD=admin \
+  iamteacher/sidekiq:web.arm64
+```
+
+### Original Solution
+
+- https://hub.docker.com/r/aschzero/sidekiq-web
+
+### License
+
+- [MIT](https://opensource.org/licenses/MIT)

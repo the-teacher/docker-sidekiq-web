@@ -1,5 +1,9 @@
-# docker build -t opencook/sidekiq-web -f Dockerfile .
-# docker run -ti opencook/sidekiq-web ash
+#
+# docker build -t iamteacher/sidekiq:web.arm64 -f Dockerfile --platform="linux/arm64" .
+# docker build -t iamteacher/sidekiq:web.amd64 -f Dockerfile --platform="linux/amd64" .
+#
+# docker run -ti iamteacher/sidekiq:web.arm64 ash
+# docker run -ti iamteacher/sidekiq:web.amd64 ash
 FROM ruby:3.1-alpine
 
 WORKDIR /sidekiq
