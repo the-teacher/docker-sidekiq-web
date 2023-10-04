@@ -21,7 +21,7 @@ If you have an old Sidekiq, but want to use most recent version of Sidekiq Web U
 
 * Alpine
 * Ruby 3
-* Sidekiq 7.0.2
+* Sidekiq 7+
 * HTTP Basic Auth support
 
 # Usage
@@ -46,7 +46,7 @@ services:
     environment:
       REDIS_URL: redis://redis:6379
       SIDEKIQ_USER: admin
-      SIDEKIQ_PASSWORD: password123
+      SIDEKIQ_PASSWORD: admin
     ports:
       - 3030:3030
 ```
@@ -64,7 +64,7 @@ docker run \
   -e REDIS_URL=redis://redis:6379 \
   -e SIDEKIQ_USER=admin \
   -e SIDEKIQ_PASSWORD=admin \
-  iamteacher/sidekiq:web.arm64
+  iamteacher/sidekiq
 ```
 
 ### Important notes

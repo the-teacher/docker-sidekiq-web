@@ -10,8 +10,13 @@ RUN echo "$TARGETARCH" > /TARGETARCH
 
 WORKDIR /sidekiq
 
-RUN gem install rack-session -v 0.3.0
-RUN gem install rackup -v 0.2.3
+# https://rubygems.org/gems/rack-session
+# https://rubygems.org/gems/rackup
+# https://rubygems.org/gems/webrick
+# https://rubygems.org/gems/sidekiq
+#
+RUN gem install rack-session -v 2.0.0
+RUN gem install rackup -v 2.1.0
 RUN gem install webrick -v 1.8.1
 RUN gem install sidekiq -v 7.1.5
 
